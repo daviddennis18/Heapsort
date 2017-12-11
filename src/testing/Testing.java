@@ -9,6 +9,9 @@ import static java.lang.System.currentTimeMillis;
 
 public class Testing {
 
+    public static double comparisons = 0;
+    public static double swaps = 0;
+
     public void sort(int arr[]) {
         int n = arr.length;
 
@@ -29,7 +32,7 @@ public class Testing {
         }
     }
 
-   // To heapify a subtree rooted with node i which is
+    // To heapify a subtree rooted with node i which is
     // an index in arr[]. n is size of heap
     void heapify(int arr[], int n, int i) {
         int largest = i;  // Initialize largest as root
@@ -38,16 +41,20 @@ public class Testing {
 
         // If left child is larger than root
         if (l < n && arr[l] > arr[largest]) {
+            comparisons++;
             largest = l;
         }
 
         // If right child is larger than largest so far
         if (r < n && arr[r] > arr[largest]) {
+            comparisons++;
             largest = r;
         }
 
         // If largest is not root
         if (largest != i) {
+            comparisons++;
+            swaps++;
             int swap = arr[i];
             arr[i] = arr[largest];
             arr[largest] = swap;
@@ -69,26 +76,26 @@ public class Testing {
     // Driver program
     public static void main(String args[]) {
 
-        int n = 10000;
+        int n = 10000000;
         int arr[] = new int[n];
         for (int i = 0; i < n; i++) {
-            arr[i] = (int) (Math.random() * 101);
+            arr[i] = (int) (Math.random() * 1001);
         }
-        int l = arr.length;
 
-        int start = 0;
-        int finish = 0;
-        int total = 0;
+        double start = 0;
+        double finish = 0;
+        double total = 0;
 
         Testing ob = new Testing();
-        start = (int) currentTimeMillis();
+        start = (double) currentTimeMillis();
         ob.sort(arr);
-        finish = (int) currentTimeMillis();
+        finish = (double) currentTimeMillis();
 
         total = finish - start;
 
-        System.out.println("Sorted array is");
-        System.out.println("The runtime of this sort is " + total);
-        printArray(arr);
+        System.out.println("The runtime of this sort is " + (double)total/1000 + " seconds");
+        System.out.println("The number of comparisons made is " + comparisons);
+        System.out.println("The number of swaps made is " + swaps);
+        
     }
 }
